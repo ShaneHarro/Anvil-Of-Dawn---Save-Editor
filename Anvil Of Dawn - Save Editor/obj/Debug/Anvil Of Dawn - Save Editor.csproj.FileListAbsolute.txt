@@ -1,0 +1,9 @@
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\bin\Debug\Anvil Of Dawn - Save Editor.exe.config
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\bin\Debug\Anvil Of Dawn - Save Editor.exe
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\bin\Debug\Anvil Of Dawn - Save Editor.pdb
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\obj\Debug\Anvil Of Dawn - Save Editor.csprojResolveAssemblyReference.cache
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\obj\Debug\Anvil_Of_Dawn___Save_Editor.Form1.resources
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\obj\Debug\Anvil_Of_Dawn___Save_Editor.Properties.Resources.resources
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\obj\Debug\Anvil Of Dawn - Save Editor.csproj.GenerateResource.Cache
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\obj\Debug\Anvil Of Dawn - Save Editor.exe
+C:\Users\SHANE\Documents\Visual Studio 2013\Projects\Anvil Of Dawn - Save Editor\Anvil Of Dawn - Save Editor\obj\Debug\Anvil Of Dawn - Save Editor.pdb

@@ -1,0 +1,657 @@
+<html>
+<head>
+<h1>Anvil Of Dawn - File Documentation:</h1>
+<h2>Written by Shaneharro1 - https://saveeditors.wordpress.com/ </h2>
+</head>
+<body>
+
+<p></br></p>
+<h3><u>Save Files</u></h3>
+    <p>All save game files are found in the <code>SAVES</code> directory, and numbered as <code>SAVE00.DAT</code> - <code>SAVE04.DAT</code>. A single save file contains all the information about the players current state, such as HP, mana, stats, inventory, etc. Note that the save file stores values in <strong>Little Endian</strong> format. The offsets for each value are as follows:</p>
+    <table cellspacing="5" border="1">
+        <th><strong>SAVExx.DAT</strong></th>
+        <tr><td><strong>Value</strong></td><td><strong>Offset</strong></td><td><strong>Length</strong></td><td><strong>Notes</strong></td></tr>
+        <tr><td>Current Health</td><td>0x4C4B</td><td>2 bytes</td></tr>
+        <tr><td>Max Health</td><td>0x4C4D</td><td>2 bytes</td></tr>
+        <tr><td>Current Mana</td><td>0x4C4F</td><td>2 bytes</td></tr>
+        <tr><td>Max Mana</td><td>0x4C51</td><td>2 bytes</td></tr>
+        <tr><td>Current Strength</td><td>0x4C57</td><td>2 bytes*</td></tr>
+        <tr><td>Max Strength</td><td>0x4C59</td><td>2 bytes*</td></tr>
+        <tr><td>Current Stamina</td><td>0x4C63</td><td>2 bytes*</td></tr>
+        <tr><td>Max Stamina</td><td>0x4C65</td><td>2 bytes*</td></tr>
+        <tr><td>Current Agility</td><td>0x4C6B</td><td>2 bytes*</td></tr>
+        <tr><td>Max Agility</td><td>0x4C6D</td><td>2 bytes*</td></tr>
+        <tr><td>Current Power</td><td>0x4C75</td><td>2 bytes*</td></tr>
+        <tr><td>Max Power</td><td>0x4C77</td><td>2 bytes*</td></tr>
+        <tr><td>X position</td><td>0x4C17</td><td>4 bytes**</td></tr>
+        <tr><td>Y position</td><td>0x4C1B</td><td>4 bytes**</td></tr>
+        <tr><td>Z position (floor)</td><td>0x4C54</td><td>1 byte</td><td>See <a href='#floor'>below</a> about floor level values.</td></tr>
+        <tr><td>Character potrait/sprite</td><td>0x4C55</td><td>1 byte</td><td>Values between 00 and 04 represent each character</td></tr>
+        <tr><td>Mana Regen Amount</td><td>0x4C75</td><td>2 bytes</td><td>Doesn't increase tick speed. Just how much is regen'd per tick.</td></tr>
+        </br>
+
+
+    </table>
+
+<i>*Technically these values are 2 bytes in length, but I found that editing the values over 255 caused too many issues within the game engine itself. There is no real reason for them to go over 255 anyway, so this </br>
+    program only modifies 1 byte.</i></br></br>
+
+<i>**Technically these values are 4 bytes in length, but I found that editing the values over 255 caused too many issues within the game engine itself. There is no real reason for them to go over 255 anyway, so this </br>
+    program only modifies 1 byte.</i></br>
+
+<h4 id="floor">Floor levels:</h4>
+<p>Z position (floor level) is a single byte in length at offset 0x4C54. There are 32 floors (a couple of values repeat floors for some reason). The values at the Z position offset are as follows:</p>
+    <table cellspacing="5" border="1">
+        <tr><td><strong>Value(hex)</strong></td><td><strong>Floor Name</strong></td></tr>
+        <tr><td>00</td><td>Grand Palace Halls</td></tr>
+        <tr><td>01</td><td>	Grand Palace Lower Chamber</td></tr>
+        <tr><td>02</td><td>	Gryphon Keep Main Level</td></tr>
+        <tr><td>03</td><td>	Gryphon Keep Dungeon</td></tr>
+        <tr><td>04</td><td>	Dark Lantern Tower Levels</td></tr>
+        <tr><td>05</td><td>	Dark Lantern Catacombs</td></tr>
+        <tr><td>06</td><td>	Underwater Labyrinth (1)</td></tr>
+        <tr><td>07</td><td>	Underwater Labyrinth (2)</td></tr>
+        <tr><td>08</td><td>	Sunken Galley</td></tr>
+        <tr><td>09</td><td>	Underground City</td></tr>
+        <tr><td>0A</td><td>	The Barrier</td></tr>
+        <tr><td>0B</td><td>	Temple Of The Moon</td></tr>
+        <tr><td>0C</td><td>	Temple Tower Upper Levels</td></tr>
+        <tr><td>0D</td><td>	City Of The Dead</td></tr>
+        <tr><td>0E</td><td>	City Of Dead Lower Vaults</td></tr>
+        <tr><td>0F</td><td>	Land Of Roots</td></tr>
+        <tr><td>10</td><td>	The Elder Tree Inner Chmabers</td></tr>
+        <tr><td>11</td><td>	Sanctuary</td></tr>
+        <tr><td>12</td><td>	Gorge Keep</td></tr>
+        <tr><td>13</td><td>	The Reed Plain</td></tr>
+        <tr><td>14</td><td>	Iron Titan (1)</td></tr>
+        <tr><td>15</td><td>	Iron Titan (2)</td></tr>
+        <tr><td>16</td><td>	Iron Titan (3)</td></tr>
+        <tr><td>17</td><td>	The Quagmire</td></tr>
+        <tr><td>18</td><td>	Evil Stronghold Dungeon</td></tr>
+        <tr><td>19</td><td>	Evil Stronghold Main Level</td></tr>
+        <tr><td>1A</td><td>	Evil Stronghold Tower Levels</td></tr>
+        <tr><td>1B</td><td>	Fire Mountain Main Caverns</td></tr>
+        <tr><td>1C</td><td>	Fire Mountain Lower Caverns</td></tr>
+        <tr><td>1D</td><td>	Waterfall Hidden Cave</td></tr>
+        <tr><td>1E</td><td>	City Mines</td></tr>
+        <tr><td>1F</td><td>	Anvil Of Dawn</td></tr>
+
+
+    </table>
+
+
+    <h4 id="floor">Inventory:</h4>
+    <p>I have found inventory editing to be quite difficult, and this program does not yet support being able to edit or view inventory. However, I have made some discoveries on the issue, and will
+    write here what I know. Hopefully it will help someone figure it out!</p>
+    <p>Anvil of Dawn seems to track inventory by in which <strong>order</strong> it was placed in the inventory. For example, if you have two items "A" and "B", if you place "A" in your inventory first, then item "A"
+    will be the item in <code>[slot 1]</code>. If you were to place "B" in your inventory first, then "B" would be the item in <code>[slot 1]</code>. If you have multiple items in your inventory and remove one, then the
+    gap gets "filled" by all item slots that appear after it shifting by 1. It is not known to me how storage items (such as sacks) function within this data structure.
+    </p>
+    <p>From what I could tell, each "item slot" is 23 bytes apart, starting at offset 0x4E25 (slot 1). It should be noted that simply writing in values 23 bytes after your last item to "add" a free item to your inventory doesn't usually work. There are other values involved that are unknown to me. I have only managed
+    to edit existing items, not add new ones. Here is an inventory slots example:</p>
+    <table cellspacing="5" border="1">
+        <tr><td><strong>Value</strong></td><td><strong>Offset</strong></td><td><strong>Length</strong></td></tr>
+        <tr><td>Slot 1 item [X position]</td><td>0x4E25</td><td>4</td></tr>
+        <tr><td>Slot 1 item [Y position]</td><td>0x4E29</td><td>4</td></tr>
+        <tr><td>Slot 1 Item Sprite ID</td><td>0x4E2D</td><td>4</td></tr>
+        <tr><td>Slot 1 Item Actual ID</td><td>0x4E31</td><td>2</td></tr>
+        <tr><td><code>+23 bytes....</code></td></tr>
+        <tr><td>Slot 2 item [X position]</td><td>0x4E3C</td><td>4</td></tr>
+        <tr><td>Slot 2 item [Y position]</td><td>0x4E40</td><td>4</td></tr>
+        <tr><td>Slot 2 Item Sprite ID</td><td>0x4E44</td><td>4</td></tr>
+        <tr><td>Slot 2 Item Actual ID</td><td>0x4E48</td><td>2</td></tr>
+        <tr><td><code>+23 bytes....etc.</code></td></tr>
+
+    </table>
+
+    <p>Take careful note that the "Sprite ID" and "Actual ID" after two different things. The Sprite ID is just what sprite the engine loads while you're viewing your inventory. The "Actual ID" is what
+    sprite will appear when you grab the item with your cursor, and what functionality it has. The Sprite ID takes the following form (hex):</p>
+    <p><code>xx 01 06 80</code></p>
+    <p>Where "xx" is any value between 00 and FF. Once FF is reached, it ticks back over to "00" and "01" is incremented to "02". Example:</p>
+    <p><code>FF 01 06 80 ---> 00 02 06 80</code></p>
+    <p>Despite the "Actual ID" being 2 bytes in length, I have found that there are less than 255 items in the game, so we only have to be concerned with the first byte. With all this knowledge, we are
+    able to construct a table of every item in the game, with its Sprite ID and Actual ID. :</p> 
+
+    <table cellspacing="5" border="1">
+        <tr><td><strong>Item Name</strong></td><td><strong>Sprite ID</strong></td><td><strong>Actual ID</strong></td></tr>
+        <tr><td>Obj Fill</td><td>1D</td><td> 00 </td></tr>
+        <tr><td>War Armor</td><td>	1E</td><td>	01</td></tr>
+        <tr><td>Shell Plate Armor</td><td>	1F</td><td>	02</td></tr>
+        <tr><td>Chain Cloak Armor</td><td>	20</td><td>	03</td></tr>
+        <tr><td>Ivory Plate Armor</td><td>	21</td><td>	04</td></tr>
+        <tr><td>Fiery Jazerant Armor</td><td>	22</td><td>	05</td></tr>
+        <tr><td>Serpent Scale Armor</td><td>	23</td><td>	06</td></tr>
+        <tr><td>Banded Ironroot Armor</td><td>	24</td><td>	07</td></tr>
+        <tr><td>Battle Axe</td><td>	25</td><td>	08</td></tr>
+        <tr><td>War Hammer</td><td>	26</td><td>	09</td></tr>
+        <tr><td>Broad-Bladed Sword</td><td>	27</td><td>	0A</td></tr>
+        <tr><td>Great Sword</td><td>	28</td><td>	0B</td></tr>
+        <tr><td>Crossbow</td><td>	29</td><td>	0C</td></tr>
+        <tr><td>Throwing Blade</td><td>	2A</td><td>	0D</td></tr>
+        <tr><td>Spear</td><td>	2B</td><td>	0E</td></tr>
+        <tr><td>Broad Bladed Spear</td><td>	2C</td><td>	0F</td></tr>
+        <tr><td>Staff of Lightning Wild</td><td>	2D</td><td>	10</td></tr>
+        <tr><td>WhirlWind</td><td>	2E</td><td>	11</td></tr>
+        <tr><td>SeaMaiden</td><td>	2F</td><td>	12</td></tr>
+        <tr><td>CrimsonRage</td><td>	30</td><td>	13</td></tr>
+        <tr><td>BloodBane</td><td>	31</td><td>	14</td></tr>
+        <tr><td>BackLash</td><td>	32</td><td>	15</td></tr>
+        <tr><td>WarRender</td><td>	33</td><td>	16</td></tr>
+        <tr><td>SteelSunder</td><td>	34</td><td>	17</td></tr>
+        <tr><td>ThunarMjolnir</td><td>	35</td><td>	18</td></tr>
+        <tr><td>SkullScreamer</td><td>	36</td><td>	19</td></tr>
+        <tr><td>Inferno</td><td>	37</td><td>	1A</td></tr>
+        <tr><td>SoulWrought</td><td>	38</td><td>	1B</td></tr>
+        <tr><td>Crossbow Bolt</td><td>	39</td><td>	1C</td></tr>
+        <tr><td>Steel Circle Key</td><td>	3A</td><td>	1D</td></tr>
+        <tr><td>Bronze Skeleton Key</td><td>	3B</td><td>	1E</td></tr>
+        <tr><td>Copper Sun Key</td><td>	3C</td><td>	1F</td></tr>
+        <tr><td>Stone Claw Key</td><td>	3D</td><td>	20</td></tr>
+        <tr><td>Iron Dragon Key</td><td>	3E</td><td>	21</td></tr>
+        <tr><td>Silver Gryphon Key</td><td>	3F</td><td>	22</td></tr>
+        <tr><td>Gold Ankh Key</td><td>	40</td><td>	23</td></tr>
+        <tr><td>Pearl Serpent Key</td><td>	41	</td><td>24</td></tr>
+        <tr><td>Ivory Lion Key</td><td>	42</td><td>	25</td></tr>
+        <tr><td>Jade Thorn Key</td><td>	43</td><td>	26</td></tr>
+        <tr><td>Onyx Raven Key</td><td>	44</td><td>	27</td></tr>
+        <tr><td>Opal Moon Key</td><td>	45</td><td>	28</td></tr>
+        <tr><td>Amethyst Hex Key</td><td>	46</td><td>	29</td></tr>
+        <tr><td>Emerald Leaf Key</td><td>	47</td><td>	2A</td></tr>
+        <tr><td>Sapphire Tear Key</td><td>	48</td><td>	2B</td></tr>
+        <tr><td>Gold Talon</td><td>	49</td><td>	2C</td></tr>
+        <tr><td>Ruby Shard</td><td>	4A</td><td>	2D</td></tr>
+        <tr><td>Diamond</td><td>	4B</td><td>	2E</td></tr>
+        <tr><td>Stone Ankh</td><td>	4C</td><td>	2F</td></tr>
+        <tr><td>Silver cup</td><td>	4D</td><td>	30</td></tr>
+        <tr><td>Pearl</td><td>	4E</td><td>	31</td></tr>
+        <tr><td>Onyx Rose</td><td>	4F</td><td>	32</td></tr>
+        <tr><td>Iron Mark</td><td>	50</td><td>	33</td></tr>
+        <tr><td>Rock</td><td>	51</td><td>	34</td></tr>
+        <tr><td>Boulder</td><td>	52</td><td>	35</td></tr>
+        <tr><td>War Shield</td><td>	53</td><td>	36</td></tr>
+        <tr><td>Aegis</td><td>	54</td><td>	37</td></tr>
+        <tr><td>BloodHaven</td><td>	55</td><td>	38</td></tr>
+        <tr><td>CloudBurst</td><td>	56</td><td>	39</td></tr>
+        <tr><td>War armor Helm</td><td>	57</td><td>	3A</td></tr>
+        <tr><td>Shell Plate Helm</td><td>	58</td><td>	3B</td></tr>
+        <tr><td>Chain Coif</td><td>	59</td><td>	3C</td></tr>
+        <tr><td>Ivory Plate Helm</td><td>	5A</td><td>	3D</td></tr>
+        <tr><td>Jazerant Helm</td><td>	5B</td><td>	3E</td></tr>
+        <tr><td>Serpent Scale Helm</td><td>	5C</td><td>	3F</td></tr>
+        <tr><td>Ironroot Helm</td><td>	5D</td><td>	40</td></tr>
+        <tr><td>Reed Helm of Decipher</td><td>	5E</td><td>	41</td></tr>
+        <tr><td>Obj Fill (66)</td><td>	5F</td><td>	42</td></tr>
+        <tr><td>Obj Fill (67)</td><td>	60</td><td>	43</td></tr>
+        <tr><td>Scroll: Heavenly Mend of Unseen Artisans</td><td>	61</td><td>	44</td></tr>
+        <tr><td>Scroll: Iron Fist of Chaos</td><td>	62</td><td>	45</td></tr>
+        <tr><td>Scroll: Deadly Spores of Earthen Rot</td><td>	63</td><td>	46</td></tr>
+        <tr><td>Scroll: Shrouded Gale of Vengeful Winds</td><td>	64</td><td>	47</td></tr>
+        <tr><td>Scroll: Ghastly Howl of Mortal Anguish</td><td>	65</td><td>	48</td></tr>
+        <tr><td>Scroll: Unholy Conflagration</td><td>	66</td><td>	49</td></tr>
+        <tr><td>Scroll: Ash and Cinders</td><td>	67</td><td>	4A</td></tr>
+        <tr><td>Scroll: Shackles of Ice</td><td>	68</td><td>	4B</td></tr>
+        <tr><td>Scroll: Reflections of the Lake</td><td>	69</td><td>	4C</td></tr>
+        <tr><td>Scroll: Laughing Skull of Thunderous Might</td><td>	6A</td><td>	4D</td></tr>
+        <tr><td>Scroll: Roaring Column of Lightning Wild</td><td>	6B</td><td>	4E</td></tr>
+        <tr><td>Scroll: Bane's Boiling Blood</td><td>	6C</td><td>	4F</td></tr>
+        <tr><td>Scroll: The Strength of Titans</td><td>	6D</td><td>	50</td></tr>
+        <tr><td>Scroll: Ritual of Unmaking</td><td>	6E</td><td>	51</td></tr>
+        <tr><td>Encoded Messenger Scroll</td><td>	6F</td><td>	52</td></tr>
+        <tr><td>Encoded Messenger Scroll</td><td>	70</td><td>	53</td></tr>
+        <tr><td>Encoded Messenger Scroll</td><td>	71</td><td>	54</td></tr>
+        <tr><td>Scroll of Arcane Command</td><td>	72</td><td>	55</td></tr>
+        <tr><td>Blank Parchment</td><td>	73</td><td>	56</td></tr>
+        <tr><td>Scroll: Words of Opening</td><td>	74</td><td>	57</td></tr>
+        <tr><td>Messenger Scroll</td><td>	75</td><td>	58</td></tr>
+        <tr><td>Scroll: Orders of Command</td><td>	76</td><td>	59</td></tr>
+        <tr><td>Trade Journal</td><td>	77	</td><td>5A</td></tr>
+        <tr><td>Scroll: High Monk's Recollections</td><td>	78</td><td>	5B</td></tr>
+        <tr><td>War Journal</td><td>	79</td><td>	5C</td></tr>
+        <tr><td>93 (scroll)</td><td>	7A</td><td>	5D</td></tr>
+        <tr><td>94 (scroll)</td><td>	7B</td><td>	5E</td></tr>
+        <tr><td>Lord Gryphon's Dispatch</td><td>	7C</td><td>	5F</td></tr>
+        <tr><td>Scroll of Passage</td><td>	7D</td><td>	60</td></tr>
+        <tr><td>Quill Parchment: What</td><td>	7E</td><td>	61</td></tr>
+        <tr><td>Quill Parchment: Monks</td><td>	7F</td><td>	62</td></tr>
+        <tr><td>Quill Parchment: Warlord</td><td>	80</td><td>	63</td></tr>
+        <tr><td>Quill Parchment: Scar</td><td>	81</td><td>	64</td></tr>
+        <tr><td>Quill Parchment: Key</td><td>	82</td><td>	65</td></tr>
+        <tr><td>Quill Parchment: Survivors</td><td>	83</td><td>	66</td></tr>
+        <tr><td>Book of Shells</td><td>	84</td><td>	67</td></tr>
+        <tr><td>Captain's Log</td><td>	85</td><td>	68</td></tr>
+        <tr><td>Book of Summons</td><td>	86</td><td>	69</td></tr>
+        <tr><td>Book of War</td><td>	87</td><td>	6A</td></tr>
+        <tr><td>Obj Fill (107)</td><td>	88</td><td>	6B</td></tr>
+        <tr><td>Obj Fill (108)</td><td>	89</td><td>	6C</td></tr>
+        <tr><td>Obj Fill (109)</td><td>	8A</td><td>	6D</td></tr>
+        <tr><td>Obj Fill (110)</td><td>	8B</td><td>	6E</td></tr>
+        <tr><td>Obj Fill (111)</td><td>	8C</td><td>	6F</td></tr>
+        <tr><td>Obj Fill (112)</td><td>	8D</td><td>	70</td></tr>
+        <tr><td>Obj Fill (113)</td><td>	8E</td><td>	71</td></tr>
+        <tr><td>Obj Fill (114)</td><td>	8F</td><td>	72</td></tr>
+        <tr><td>Brown Leather Sack (May have random objects inside)</td><td>	90</td><td>	73</td></tr>
+        <tr><td>Yellow Leather Sack (May have random objects inside)</td><td>	91</td><td>	74</td></tr>
+        <tr><td>White Leather Sack (May have random objects inside)</td><td>	92</td><td>	75</td></tr>
+        <tr><td>Iron Bound Chest (May have random objects inside)</td><td>	93</td><td>	76</td></tr>
+        <tr><td>Bronze Bound Chest (May have random objects inside)</td><td>	94</td><td>	77</td></tr>
+        <tr><td>Wooden Chest (May have random objects inside)</td><td>	95</td><td>	78</td></tr>
+        <tr><td>Obj Fill (121)</td><td>	96</td><td>	79</td></tr>
+        <tr><td>Obj Fill (122)</td><td>	97</td><td>	7A</td></tr>
+        <tr><td>Elixir of Fire Resistance</td><td>	98</td><td>	7B</td></tr>
+        <tr><td>Elixir of Heroic Rage</td><td>	99</td><td>	7C</td></tr>
+        <tr><td>Potion of Stamina</td><td>	9A</td><td>	7D</td></tr>
+        <tr><td>Potion of Agility</td><td>	9B</td><td>	7E</td></tr>
+        <tr><td>Potion of Healing</td><td>	9C</td><td>	7F</td></tr>
+        <tr><td>Potion of Cure Poison</td><td>	9D</td><td>	80</td></tr>
+        <tr><td>Potion of Strength</td><td>	9E</td><td>	81</td></tr>
+        <tr><td>Elixir of Detect Monster</td><td>	9F</td><td>	82</td></tr>
+        <tr><td>Draught of Heightened Mortality</td><td>	A0</td><td>	83</td></tr>
+        <tr><td>Draught of Heightened Magic Power</td><td>	A1</td><td>	84</td></tr>
+        <tr><td>Obj Fill (133)</td><td>	A2</td><td>	85</td></tr>
+        <tr><td>Obj Fill (134)</td><td>	A3</td><td>	86</td></tr>
+        <tr><td>Wyvern's Blood</td><td>	A4</td><td>	87</td></tr>
+        <tr><td>Magia Plant</td><td>	A5</td><td>	88</td></tr>
+        <tr><td>Bottle of Wine</td><td>	A6</td><td>	89</td></tr>
+        <tr><td>Obj Fill (138)</td><td>	A7</td><td>	8A</td></tr>
+        <tr><td>Block Figurine</td><td>	A8</td><td>	8B</td></tr>
+        <tr><td>Iron Fist Figurine</td><td>	A9</td><td>	8C</td></tr>
+        <tr><td>Laughting Skull Figurine</td><td>	AA</td><td>	8D</td></tr>
+        <tr><td>Dark Cloak of Shadow Figurine</td><td>	AB</td><td>	8E</td></tr>
+        <tr><td>Roaring Column Figurine</td><td>	AC</td><td>	8F</td></tr>
+        <tr><td>Cube of Magic Immersion</td><td>	AD</td><td>	90</td></tr>
+        <tr><td>Soul Link Figurine</td><td>	AE</td><td>	91</td></tr>
+        <tr><td>Obj Fill (146)</td><td>	AF</td><td>	92</td></tr>
+        <tr><td>Obj Fill (147)</td><td>	B0</td><td>	93</td></tr>
+        <tr><td>Obj Fill (148)</td><td>	B1</td><td>	94</td></tr>
+        <tr><td>Obj Fill (149)</td><td>	B2</td><td>	95</td></tr>
+        <tr><td>Obj Fill (150)</td><td>	B3</td><td>	96</td></tr>
+        <tr><td>Amulet of Strength (+1)</td><td>	B4</td><td>	97</td></tr>
+        <tr><td>Amulet of Strength (+2)</td><td>	B5</td><td>	98</td></tr>
+        <tr><td>Amulet of Stamina (+1)</td><td>	B6</td><td>	99</td></tr>
+        <tr><td>Amulet of Stamina (+2)</td><td>	B7</td><td>	9A</td></tr>
+        <tr><td>Amulet of Agility (+1)</td><td>	B8</td><td>	9B</td></tr>
+        <tr><td>Amulet of Agility (+2)</td><td>	B9</td><td>	9C</td></tr>
+        <tr><td>Amulet of Power (+1)</td><td>	BA</td><td>	9D</td></tr>
+        <tr><td>Amulet of Power (+2)</td><td>	BB</td><td>	9E</td></tr>
+        <tr><td>Amulet of Protection</td><td>	BC</td><td>	9F</td></tr>
+        <tr><td>Amulet of Power Regeneration</td><td>	BD</td><td>	A0</td></tr>
+        <tr><td>Amulet of Strength and Hale</td><td>	BE</td><td>	A1</td></tr>
+        <tr><td>Obj Fill (162)</td><td>	BF</td><td>	A2</td></tr>
+        <tr><td>Obj Fill (163)</td><td>	C0</td><td>	A3</td></tr>
+        <tr><td>Obj Fill (164)</td><td>	C1</td><td>	A4</td></tr>
+        <tr><td>Obj Fill (165)</td><td>	C2</td><td>	A5</td></tr>
+        <tr><td>Obj Fill (166)</td><td>	C3</td><td>	A6</td></tr>
+        <tr><td>Obj Fill (167)</td><td>	C4</td><td>	A7</td></tr>
+        <tr><td>Obj Fill (168)</td><td>	C5</td><td>	A8</td></tr>
+        <tr><td>Ivory Void Half</td><td>	C6</td><td>	A9</td></tr>
+        <tr><td>Jet Void Half</td><td>	C7</td><td>	AA</td></tr>
+        <tr><td>Symbol of Flesh - Red</td><td>	C8</td><td>	AB</td></tr>
+        <tr><td>Symbol of Flesh - Gold</td><td>	C9</td><td>	AC</td></tr>
+        <tr><td>Dragon Amber</td><td>	CA	</td><td>AD</td></tr>
+        <tr><td>Stasis Jar</td><td>	CB</td><td>	AE</td></tr>
+        <tr><td>Stasis Jar Containing Dragon Amber</td><td>	CC</td><td>	AF</td></tr>
+        <tr><td>Bead of Immortal Clay</td><td>	CD</td><td>	B0</td></tr>
+        <tr><td>Wood from the Wicked Tree</td><td>	CE</td><td>	B1</td></tr>
+        <tr><td>Soul House</td><td>	CF</td><td>	B2
+        <tr><td>Soul House Containing the Spirit of the Ivory Prince</td><td>	D0</td><td>	B3</td></tr>
+        <tr><td>Sipher Containing Blessed Tears of the Weeping Moon</td><td>	D1</td><td>	B4</td></tr>
+        <tr><td>Iron Shackles</td><td>	D2</td><td>	B5</td></tr>
+        <tr><td>Heart Stone</td><td>	D3</td><td>	B6</td></tr>
+        <tr><td>Coffer</td><td>	D4</td><td>	B7</td></tr>
+        <tr><td>Sacred Sipher</td><td>	D5</td><td>	B8</td></tr>
+        <tr><td>Dragon Amber</td><td>	D6</td><td>	B9</td></tr>
+        <tr><td>Dragon Amber</td><td>	D7	</td><td>BA</td></tr>
+        <tr><td>Coffer Containing the Dark Slag</td><td>	D8</td><td>	BB</td></tr>
+        <tr><td>Eye of Insight</td><td>	D9</td><td>	BC</td></tr>
+        <tr><td>Horn of Passage</td><td>	DA</td><td>	BD</td></tr>
+        <tr><td>Hourglass of Temporal Freeze</td><td>	DB</td><td>	BE</td></tr>
+        <tr><td>191 (teleport target wand/rod)</td><td>	DC</td><td>	BF</td></tr>
+        <tr><td>Staff of Unmaking</td><td>	DD</td><td>	C0</td></tr>
+        <tr><td>Rod of Magic Immersion</td><td>	DE</td><td>	C1</td></tr>
+        <tr><td>SteelRipper - Spear</td><td>DF</td><td>	C2</td></tr>
+        <tr><td>Obj Fill (195)</td><td>	E0</td><td>	C3</td></tr>
+        <tr><td>Obj Fill (196)</td><td>	E1</td><td>	C4</td></tr>
+        <tr><td>Obj Fill (197)</td><td>	E2</td><td>	C5</td></tr>
+        <tr><td>Obj Fill (198)</td><td>	E3</td><td>	C6</td></tr>
+        <tr><td>Obj Fill (199)</td><td>	E4</td><td>	C7</td></tr>
+        <tr><td>Skarac</td><td>	E5</td><td>	C8</td></tr>
+        <tr><td>Skarac</td><td>	E6</td><td>	C9</td></tr>
+        <tr><td>Sigil of Fire</td><td>	E7</td><td>	CA</td></tr>
+        <tr><td>Bloated Heart</td><td>	E8</td><td>	CB</td></tr>
+        <tr><td>Large Crystal Orb</td><td>	E9</td><td>	CC</td></tr>
+        <tr><td>Sol Disc</td><td>	EA</td><td>	CD</td></tr>
+        <tr><td>Moon Disc</td><td>	EB</td><td>	CE</td></tr>
+        <tr><td>Spring Equinox Disc</td><td>	EC</td><td>	CF</td></tr>
+        <tr><td>Fall Equinox Disc</td><td>	ED</td><td>	D0</td></tr>
+        <tr><td>Enchanted Sea Conch</td><td>	EE</td><td>	D1</td></tr>
+        <tr><td>Glass Lamp of Life Essence</td><td>	EF</td><td>	D2</td></tr>
+        <tr><td>Horn of Summons</td><td>	F0</td><td>	D3</td></tr>
+        <tr><td>Lure of the Heart</td><td>	F1</td><td>	D4</td></tr>
+        <tr><td>Withered Hand Key</td><td>	F2</td><td>	D5</td></tr>
+        <tr><td>Whistle of Fiery Beckons</td><td>	F3</td><td>	D6</td></tr>
+        <tr><td>Glowing Ember</td><td>	F4</td><td>	D7</td></tr>
+        <tr><td>Hallowed Staff of Elder Wood</td><td>	F5</td><td>	D8</td></tr>
+        <tr><td>Chimes of Comprehension</td><td>	F6</td><td>	D9</td></tr>
+        <tr><td>Soul House Containing the Evil Spirit</td><td>	F7</td><td>	DA</td></tr>
+        <tr><td>Hallowed Wreath of Elder Leaves	</td><td>F8</td><td>	DB</td></tr>
+        <tr><td>Crest of Tempest</td><td>	F9</td><td>	DC</td></tr>
+        <tr><td>Key Stone of Safe Crossing</td><td>	FA</td><td>	DD</td></tr>
+        <tr><td>Soul House Containing Spirit of Female Ghost</td><td>	FB</td><td>	DE</td></tr>
+        <tr><td>Wooden Crank Shaft	</td><td>FC</td><td>	DF</td></tr>
+        <tr><td>Dragon Sigil of the Void</td><td>	FD</td><td>	E0</td></tr>
+        <tr><td>Dragon Sigil of Fire</td><td>	FE</td><td>	E1</td></tr>
+        <tr><td>Dragon Sigil of Lightning</td><td>	FF</td><td>	E2</td></tr>
+        <tr><td><strong>[Change Sprite ID 4 bytes here too 00 02 06 80 to continue]</strong></td></tr>
+        <tr><td>Dragon Sigil of the Wind</td><td>	00</td><td>	E3</td></tr>
+        <tr><td>Dragon Sigil of Water</td><td>	01</td><td>	E4</td></tr>
+        <tr><td>Dragon Sigil of the Earth</td><td>	02</td><td>	E5</td></tr>
+        <tr><td>Trumpet of Earthen Quake</td><td>	03</td><td>	E6</td></tr>
+        <tr><td>Lure of the Heart</td><td>	04</td><td>	E7</td></tr>
+        <tr><td>Dark Slag</td><td>	05</td><td>	E8</td></tr>
+        <tr><td>Obj Fill (233)</td><td>	06</td><td>	E9</td></tr>
+        <tr><td>Obj Fill (234)</td><td>	07</td><td>	EA</td></tr>
+        <tr><td>Obj Fill (235)</td><td>	08</td><td>	EB</td></tr>
+        <tr><td>Obj Fill (236)</td><td>	09</td><td>	EC</td></tr>
+        <tr><td>Obj Fill (237)</td><td>	0A</td><td>	ED</td></tr>
+        <tr><td>Obj Fill (238)</td><td>	0B</td><td>	EE</td></tr>
+        <tr><td>Obj Fill (239)</td><td>	0C</td><td>	EF</td></tr>
+        <tr><td>Obj Fill (240)</td><td>	0D</td><td>	F0</td></tr>
+        <tr><td>Obj Fill (241)</td><td>	0E</td><td>	F1</td></tr>
+        <tr><td>Obj Fill (242)</td><td>	0F</td><td>	F2</td></tr>
+        <tr><td>Obj Fill (243)</td><td>	10</td><td>	F3</td></tr>
+        <tr><td>Obj Fill (244)</td><td>	11</td><td>	F4</td></tr>
+        <tr><td>Obj Fill (245)</td><td>	12</td><td>	F5</td></tr>
+        <tr><td>Obj Fill (246)</td><td>	13</td><td>	F6</td></tr>
+        <tr><td>Obj Fill (247)</td><td>	14</td><td>	F7</td></tr>
+        <tr><td>Obj Fill (248)</td><td>	15</td><td>	F8</td></tr>
+        <tr><td>Obj Fill (249)</td><td>	16</td><td>	F9</td></tr>
+        <tr><td>Obj Fill (250)</td><td>	17</td><td>	FA</td></tr>
+    </table>
+
+
+</br><h3><u>Music Files</u></h3>
+    <p>All music files in Anvil of Dawn can be found in <code>RES.008</code> in the <code>DATA</code> folder. The music is stored as HMP files. HMP is somewhat of an obscure format similar to regular MIDI, and unfortunately there isn&#8217;t too much documentation online for it. Luckily, Markus Hein at <a href="http://www.dukertcm.com/knowledge-base/downloads-rtcm/tekwar-tools/"> this website</a> has made a utility for both ripping HMP files, and converting HMP -&gt; MIDI.</br><br />
+Since the HMP files are stored sequentially (that is, one appears right after another ends) the byte length of each HMP file is the difference between the next offset and the current offset you want to find the length for. For example, the byte length of Track 00 is Track 01&#8217;s offset (0x7D4C) subtract Track 00&#8217;s offset (0x118) so the byte length is 31796(decimal).  The offsets for the HMP files are as follows:</p>
+    <table cellspacing="5" border="1">
+        <tr>
+            <td><strong>RES.008</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Offset</strong></td>
+            <td><strong>Track Name</strong></td>
+        </tr>
+        <tr>
+            <td>0x118</td>
+            <td>Track 00</td>
+        </tr>
+        <tr>
+            <td>0x7D4C</td>
+            <td>Track 01</td>
+        </tr>
+        <tr>
+            <td>0xC901</td>
+            <td>Track 02</td>
+        </tr>
+        <tr>
+            <td>0x1174E</td>
+            <td>Track 03</td>
+        </tr>
+        <tr>
+            <td>0x1D3A9</td>
+            <td>Track 04</td>
+        </tr>
+        <tr>
+            <td>0x1FA54</td>
+            <td>Track 05</td>
+        </tr>
+        <tr>
+            <td>0x24582</td>
+            <td>Track 06</td>
+        </tr>
+        <tr>
+            <td>0x2B527</td>
+            <td>Track 07</td>
+        </tr>
+        <tr>
+            <td>0x2EE44</td>
+            <td>Track 08</td>
+        </tr>
+        <tr>
+            <td>0x32822</td>
+            <td>Track 09</td>
+        </tr>
+        <tr>
+            <td>0x3D9C9</td>
+            <td>Track 10</td>
+        </tr>
+        <tr>
+            <td>0x4647D</td>
+            <td>Track 11</td>
+        </tr>
+        <tr>
+            <td>0x48BE6</td>
+            <td>Track 12</td>
+        </tr>
+        <tr>
+            <td>0x532B8</td>
+            <td>Track 13</td>
+        </tr>
+        <tr>
+            <td>0x5B085</td>
+            <td>Track 14</td>
+        </tr>
+        <tr>
+            <td>0x5C1D3</td>
+            <td>Track 15</td>
+        </tr>
+        <tr>
+            <td>0x5D48C</td>
+            <td>Track 16</td>
+        </tr>
+        <tr>
+            <td>0x60394</td>
+            <td>Track 17</td>
+        </tr>
+        <tr>
+            <td>0x684D3</td>
+            <td>Track 18</td>
+        </tr>
+        <tr>
+            <td>0x6A1E4</td>
+            <td>Track 19</td>
+        </tr>
+        <tr>
+            <td>0x6ACEB</td>
+            <td>Track 20</td>
+        </tr>
+        <tr>
+            <td>0x6F8D0</td>
+            <td>Track 21</td>
+        </tr>
+        <tr>
+            <td>0x70179</td>
+            <td>Track 22</td>
+        </tr>
+        <tr>
+            <td>0x72B03</td>
+            <td>Track 23</td>
+        </tr>
+        <tr>
+            <td>0x75F24</td>
+            <td>Track 24</td>
+        </tr>
+        <tr>
+            <td>0x7749D</td>
+            <td>Track 25</td>
+        </tr>
+        <tr>
+            <td>0x79E2A</td>
+            <td>Track 26</td>
+        </tr>
+        <tr>
+            <td>0x7D067</td>
+            <td>Track 27</td>
+        </tr>
+        <tr>
+            <td>0x7ED58</td>
+            <td>Track 28</td>
+        </tr>
+        <tr>
+            <td>0x801DA</td>
+            <td>Track 29</td>
+        </tr>
+        <tr>
+            <td>0x81603</td>
+            <td>Track 30</td>
+        </tr>
+        <tr>
+            <td>0x89237</td>
+            <td>Track 31</td>
+        </tr>
+        <tr>
+            <td>0x8B4A3</td>
+            <td>Track 32</td>
+        </tr>
+        <tr>
+            <td>0x8C023</td>
+            <td>Track 33</td>
+        </tr>
+        <tr>
+            <td>0x92D4C</td>
+            <td>Track 34</td>
+        </tr>
+        <tr>
+            <td>0x9A1FB</td>
+            <td>Track 35</td>
+        </tr>
+        <tr>
+            <td>0x9EF88</td>
+            <td>Track 36</td>
+        </tr>
+        <tr>
+            <td>0xA4247</td>
+            <td>Track 37</td>
+        </tr>
+        <tr>
+            <td>0xAF92F</td>
+            <td>Track 38</td>
+        </tr>
+        <tr>
+            <td>0xB1FCD</td>
+            <td>Track 39</td>
+        </tr>
+        <tr>
+            <td>0xB6B79</td>
+            <td>Track 40</td>
+        </tr>
+        <tr>
+            <td>0xBD044</td>
+            <td>Track 41</td>
+        </tr>
+        <tr>
+            <td>0xC0969</td>
+            <td>Track 42</td>
+        </tr>
+        <tr>
+            <td>0xC441C</td>
+            <td>Track 43</td>
+        </tr>
+        <tr>
+            <td>0xD725A</td>
+            <td>Track 44</td>
+        </tr>
+        <tr>
+            <td>0xE009A</td>
+            <td>Track 45</td>
+        </tr>
+        <tr>
+            <td>0xE2838</td>
+            <td>Track 46</td>
+        </tr>
+        <tr>
+            <td>0xECFBE</td>
+            <td>Track 47</td>
+        </tr>
+        <tr>
+            <td>0xF3B1C</td>
+            <td>Track 48</td>
+        </tr>
+        <tr>
+            <td>0xF4C98</td>
+            <td>Track 49</td>
+        </tr>
+        <tr>
+            <td>0xF5F54</td>
+            <td>Track 50</td>
+        </tr>
+        <tr>
+            <td>0xFC80D</td>
+            <td>Track 51</td>
+        </tr>
+        <tr>
+            <td>0x103BAB</td>
+            <td>Track 52</td>
+        </tr>
+        <tr>
+            <td>0x1058BF</td>
+            <td>Track 53</td>
+        </tr>
+        <tr>
+            <td>0x106C27</td>
+            <td>Track 54</td>
+        </tr>
+        <tr>
+            <td>0x10C72C</td>
+            <td>Track 55</td>
+        </tr>
+        <tr>
+            <td>0x10D04B</td>
+            <td>Track 56</td>
+        </tr>
+        <tr>
+            <td>0x10FA88</td>
+            <td>Track 57</td>
+        </tr>
+        <tr>
+            <td>0x112DF3</td>
+            <td>Track 58</td>
+        </tr>
+        <tr>
+            <td>0x11436C</td>
+            <td>Track 59</td>
+        </tr>
+        <tr>
+            <td>0x116F12</td>
+            <td>Track 60</td>
+        </tr>
+        <tr>
+            <td>0x11A158</td>
+            <td>Track 61</td>
+        </tr>
+        <tr>
+            <td>0x11BF10</td>
+            <td>Track 62</td>
+        </tr>
+        <tr>
+            <td>0x11E0E1</td>
+            <td>Track 63</td>
+        </tr>
+        <tr>
+            <td>0x11F502</td>
+            <td>Track 64</td>
+        </tr>
+        <tr>
+            <td>0x1269B1</td>
+            <td>Track 65</td>
+        </tr>
+        <tr>
+            <td>0x128CD8</td>
+            <td>Track 66</td>
+        </tr>
+        <tr>
+            <td>0x129858</td>
+            <td>Track 67</td>
+        </tr>
+    </table>
+</body>
+</html>
